@@ -21,11 +21,13 @@ export const StageBackground: React.FC<StageBackgroundProps> = ({
   const foreX = -parallaxX * 42;
   const foreY = -parallaxY * 28;
 
+  const baseUrl = import.meta.env.BASE_URL || './';
+
   // Individual high-resolution artwork for each world
   const stageImages = [
-    '/assets/aistudio/B_y_l__K_t_phanede__lk_S_r__3__fea17c18.png',
-    '/assets/aistudio/Merakl__Ka_ifin_Bilim_Laboratuvar__49a8a60c.png',
-    '/assets/aistudio/Uzay__stasyonunda_D_nya_Ke_fi_007874a3.png',
+    `${baseUrl}assets/aistudio/B_y_l__K_t_phanede__lk_S_r__3__fea17c18.png`,
+    `${baseUrl}assets/aistudio/Merakl__Ka_ifin_Bilim_Laboratuvar__49a8a60c.png`,
+    `${baseUrl}assets/aistudio/Uzay__stasyonunda_D_nya_Ke_fi_007874a3.png`,
   ];
 
   return (

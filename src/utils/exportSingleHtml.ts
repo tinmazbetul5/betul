@@ -250,6 +250,33 @@ export function exportSingleHtmlFile() {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
     }
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(-20px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+        opacity: 1;
+      }
+      25% {
+        transform: translateY(25vh) translateX(15px) rotateX(180deg) rotateY(90deg) rotateZ(45deg);
+      }
+      50% {
+        transform: translateY(50vh) translateX(-15px) rotateX(360deg) rotateY(270deg) rotateZ(180deg);
+      }
+      75% {
+        transform: translateY(75vh) translateX(10px) rotateX(540deg) rotateY(360deg) rotateZ(270deg);
+        opacity: 0.95;
+      }
+      100% {
+        transform: translateY(105vh) translateX(-10px) rotateX(720deg) rotateY(540deg) rotateZ(360deg);
+        opacity: 0.2;
+      }
+    }
+    .confetti-p {
+      position: absolute;
+      top: -20px;
+      will-change: transform, opacity;
+      animation: confetti-fall linear infinite;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
@@ -295,11 +322,32 @@ export function exportSingleHtmlFile() {
 
     <!-- 3D Clay Character -->
     <div class="character-wrap" id="characterBox">
-      <img id="charImg" src="/assets/aistudio/image_b4e6452e.png" alt="Aylin">
+      <img id="charImg" src="./assets/aistudio/image_b4e6452e.png" alt="Aylin">
     </div>
   </div>
 
   <div class="buttons-grid" id="buttonsGrid" style="display:none;"></div>
+
+  <!-- Results Modal with Festive Confetti -->
+  <div id="resultsModal" style="display:none; position:fixed; inset:0; z-index:100; background:rgba(2,6,23,0.92); backdrop-filter:blur(8px); justify-content:center; align-items:center; padding:20px;">
+    <div id="confettiContainer" style="position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:101;"></div>
+    <div style="position:relative; z-index:102; background:#0f172a; border:2px solid #f59e0b; border-radius:24px; padding:30px; max-width:600px; width:100%; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,0.8);">
+      <div style="font-size:48px; margin-bottom:10px;">🏆</div>
+      <h2 style="font-size:24px; font-weight:900; color:#fff; margin-bottom:8px;">TEBRİKLER! GÖREV TAMAMLANDI!</h2>
+      <p style="font-size:14px; color:#cbd5e1; margin-bottom:20px;">15 LGS çıkmış sorusunu 3 mekanda başarıyla tamamladınız.</p>
+      <div style="display:flex; justify-content:space-around; background:#020617; padding:15px; border-radius:16px; border:1px solid #1e293b; margin-bottom:24px;">
+        <div>
+          <div style="font-size:12px; color:#94a3b8;">Toplam Puan</div>
+          <div id="finalScore" style="font-size:24px; font-weight:900; color:#06b6d4; font-family:monospace;">0 / 1500</div>
+        </div>
+        <div>
+          <div style="font-size:12px; color:#94a3b8;">Başarı Oranı</div>
+          <div id="finalPercent" style="font-size:24px; font-weight:900; color:#f59e0b; font-family:monospace;">%0</div>
+        </div>
+      </div>
+      <button onclick="restartGame()" style="background:#f59e0b; border:none; border-bottom:4px solid #b45309; color:#020617; font-weight:900; font-size:15px; padding:12px 30px; border-radius:14px; cursor:pointer; transition:transform 0.15s;">Oyunu Yeniden Başlat</button>
+    </div>
+  </div>
 
   <script>
     const questions = ${questionsJson};
@@ -390,9 +438,9 @@ export function exportSingleHtmlFile() {
     });
 
     const stageAssets = [
-      { img: '/assets/aistudio/B_y_l__K_t_phanede__lk_S_r__3__fea17c18.png', text: 'İlk sırrı keşfetmek için kitaba dokun!', icon: '📖' },
-      { img: '/assets/aistudio/Merakl__Ka_ifin_Bilim_Laboratuvar__49a8a60c.png', text: 'Yeni ipuçlarını bulmak için büyütece dokun!', icon: '🔍' },
-      { img: '/assets/aistudio/Uzay__stasyonunda_D_nya_Ke_fi_007874a3.png', text: 'Son keşif için Dünya maketine dokun!', icon: '🌍' }
+      { img: './assets/aistudio/B_y_l__K_t_phanede__lk_S_r__3__fea17c18.png', text: 'İlk sırrı keşfetmek için kitaba dokun!', icon: '📖' },
+      { img: './assets/aistudio/Merakl__Ka_ifin_Bilim_Laboratuvar__49a8a60c.png', text: 'Yeni ipuçlarını bulmak için büyütece dokun!', icon: '🔍' },
+      { img: './assets/aistudio/Uzay__stasyonunda_D_nya_Ke_fi_007874a3.png', text: 'Son keşif için Dünya maketine dokun!', icon: '🌍' }
     ];
 
     function startTimer() {
@@ -444,7 +492,7 @@ export function exportSingleHtmlFile() {
       document.getElementById('qNum').innerText = q.id;
       document.getElementById('questionText').innerText = q.questionText;
       document.getElementById('feedbackText').innerText = '';
-      document.getElementById('charImg').src = '/assets/aistudio/image_b4e6452e.png';
+      document.getElementById('charImg').src = './assets/aistudio/image_b4e6452e.png';
 
       renderButtons(q);
       renderParticles(q.stageIndex);
@@ -467,7 +515,7 @@ export function exportSingleHtmlFile() {
       if (isAnswered) return;
       isAnswered = true;
       playWhistle();
-      document.getElementById('charImg').src = '/assets/aistudio/image_876bf2de.png';
+      document.getElementById('charImg').src = './assets/aistudio/image_876bf2de.png';
       document.getElementById('feedbackText').innerHTML = \`<span style="color:#f87171">Süre doldu!</span>\`;
 
       setTimeout(() => {
@@ -494,7 +542,7 @@ export function exportSingleHtmlFile() {
       } else {
         playDonk();
         setTimeout(playWhistle, 120);
-        document.getElementById('charImg').src = '/assets/aistudio/image_876bf2de.png';
+        document.getElementById('charImg').src = './assets/aistudio/image_876bf2de.png';
         clickedBtn.classList.add('btn-wrong');
         document.getElementById('feedbackText').innerHTML = \`<span style="color:#f87171">Bu kez olmadı, sıradaki soruda yeniden dene!</span>\`;
 
@@ -516,11 +564,50 @@ export function exportSingleHtmlFile() {
           renderQuestion();
         }
       } else {
-        alert(\`TEBRİKLER! LGS Cümlenin Ögeleri Kaçış Odasını Tamamladınız!\\nToplam Skor: \${score} / 1500\`);
-        currentIndex = 0;
-        score = 0;
-        renderStageGate();
+        showResultsModal();
       }
+    }
+
+    function createConfetti() {
+      const container = document.getElementById('confettiContainer');
+      container.innerHTML = '';
+      const colors = ['#f59e0b', '#fbbf24', '#10b981', '#34d399', '#06b6d4', '#38bdf8', '#ec4899', '#8b5cf6'];
+      for (let i = 0; i < 50; i++) {
+        const piece = document.createElement('span');
+        piece.className = 'confetti-p';
+        const color = colors[i % colors.length];
+        const isRibbon = i % 3 === 0;
+        const w = isRibbon ? 8 : 10;
+        const h = isRibbon ? 16 : 10;
+        const dur = (2.2 + ((i * 7) % 25) / 10).toFixed(1);
+        const del = (((i * 13) % 35) / 10).toFixed(1);
+        piece.style.left = \`\${((i * 19) % 96) + 2}%\`;
+        piece.style.width = \`\${w}px\`;
+        piece.style.height = \`\${h}px\`;
+        piece.style.backgroundColor = color;
+        piece.style.borderRadius = i % 5 === 0 ? '50%' : '2px';
+        piece.style.animationDuration = \`\${dur}s\`;
+        piece.style.animationDelay = \`\${del}s\`;
+        piece.style.boxShadow = \`0 0 6px \${color}80\`;
+        container.appendChild(piece);
+      }
+    }
+
+    function showResultsModal() {
+      clearInterval(timerInterval);
+      document.getElementById('finalScore').innerText = \`\${score} / 1500\`;
+      document.getElementById('finalPercent').innerText = \`%\${Math.round((score / 1500) * 100)}\`;
+      createConfetti();
+      document.getElementById('resultsModal').style.display = 'flex';
+      playSuccess();
+    }
+
+    function restartGame() {
+      document.getElementById('resultsModal').style.display = 'none';
+      currentIndex = 0;
+      score = 0;
+      document.getElementById('hudScore').innerText = 'Puan: 0';
+      renderStageGate();
     }
 
     function renderParticles(stage) {

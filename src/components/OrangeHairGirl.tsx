@@ -28,15 +28,17 @@ export const OrangeHairGirl: React.FC<OrangeHairGirlProps> = ({
     };
   }, [mood]);
 
+  const baseUrl = import.meta.env.BASE_URL || './';
+
   // Determine current active image
-  let activeSrc = '/assets/aistudio/image_b4e6452e.png';
+  let activeSrc = `${baseUrl}assets/aistudio/image_b4e6452e.png`;
   let animationClass = '';
 
   if (mood === 'wrong' || mood === 'whistle') {
     activeSrc =
       whistleFrame === 0
-        ? '/assets/aistudio/image_876bf2de.png'
-        : '/assets/aistudio/image_1d3ad34f.png';
+        ? `${baseUrl}assets/aistudio/image_876bf2de.png`
+        : `${baseUrl}assets/aistudio/image_1d3ad34f.png`;
     animationClass = 'animate-shake scale-105';
   } else if (mood === 'happy') {
     animationClass = 'animate-bounce scale-105';

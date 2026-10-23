@@ -1,6 +1,7 @@
 import React from 'react';
 import { MEB_QUESTIONS, STAGES } from '../data/gameQuestions';
 import { Trophy, RotateCcw, CheckCircle2, XCircle, Award, BookOpen, FlaskConical, Rocket } from 'lucide-react';
+import { ConfettiEffect } from './ConfettiEffect';
 
 interface ResultsModalProps {
   score: number;
@@ -30,7 +31,10 @@ export const ResultsModal: React.FC<ResultsModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md animate-fade-in overflow-y-auto">
-      <div className="bg-slate-900 border-2 border-amber-500/50 rounded-3xl max-w-4xl w-full p-6 sm:p-8 shadow-2xl space-y-6 my-auto">
+      {/* Festive CSS-based celebration confetti */}
+      <ConfettiEffect count={55} />
+
+      <div className="relative z-10 bg-slate-900 border-2 border-amber-500/50 rounded-3xl max-w-4xl w-full p-6 sm:p-8 shadow-2xl space-y-6 my-auto">
         {/* Victory Header */}
         <div className="text-center space-y-2">
           <div className="inline-flex p-3 bg-amber-500/20 border border-amber-400/50 rounded-2xl mb-1 shadow-lg shadow-amber-500/20">
