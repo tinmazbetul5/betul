@@ -1,0 +1,8 @@
+{
+  "name": "Cümlenin Ögeleri - 3 Takımlı Kaçış Yarışması",
+  "description": "8. sınıf Türkçe 'Cümlenin Ögeleri' konusu için 3 takımlı, 3 tematik mekanlı eşzamanlı yarışma ve öğretmen hakem paneli.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
